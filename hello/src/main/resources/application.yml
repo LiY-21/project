@@ -1,0 +1,35 @@
+spring:
+  profiles:
+    active: dev
+  datasource:
+    name: anjbo-server-third-api   #数据库名称
+    druid:
+      filters: stat   #监控统计拦截的filters
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql://192.168.1.174:3309/anjbo-server-third-api
+      username: deploy_write
+      password: deploy_pass
+      #配置初始化大小/最大/最小
+      initial-size: 1
+      min-idle: 1
+      max-active: 20
+
+      max-wait: 60000   #获取连接等待超时时间
+      time-between-eviction-runs-millis: 600000   # 间隔多久进行一次检测，检测需要关闭的空闲连接
+      min-evictable-idle-time-millis: 300000      # 一个连接在池中最小生存的时间
+      validation-query: SELECT 'x'
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      pool-prepared-statements: false  #打开PSCache，并指定每个连接上PSCache的大小，Oracle设置为true，MySQL设置为false，分库分表较多推介设置为false
+      max-pool-prepared-statement-per-connection-size: 20
+    type: com.alibaba.druid.pool.DruidDataSource
+  mvc:
+    view:
+      prefix: /
+      suffix: .html
+mybatis:
+  mapper-locations: classpath:mapper/*Mapper.xml
+  type-aliases-package: com.example.hello.bean
+server:
+  port: 8082
